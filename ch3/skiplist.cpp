@@ -1,10 +1,13 @@
 #include "skiplist.h"
+#include <iostream>
+using std::cout;
 
 template<class T>
 SkipList<T>::SkipList()
 {
 	for (int i = 0; i < maxLevel; i++)
 		root[i] = 0;
+	choosePowers();
 }
 
 template<class T>
@@ -24,7 +27,6 @@ void SkipList<T>::choosePowers()
 template<class T>
 int SkipList<T>::chooseLevel()
 {
-
 	int i, r = std::rand() % (powers[maxLevel-1] + 1);
 	for (i = 1; i < maxLevel; i++)
 		if (r < powers[i])
@@ -130,8 +132,6 @@ void SkipList<T>::skipListInsert(const T& key)
 	}
 }
 
-#include <iostream>
-using std::cout;
 int main(void)
 {
 	SkipList<int> sl;
@@ -141,7 +141,6 @@ int main(void)
 	cout << sl.isEmpty() <<"\n";
 	cout << *sl.skipListSearch(5) << "\n";
 	cout << *sl.skipListSearch(55) << "\n";
-	cout << *sl.skipListSearch(555) << "\n";
 
 	return (0);
 }

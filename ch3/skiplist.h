@@ -12,6 +12,7 @@ class SkipListNode
 		T key;
 		SkipListNode **next;
 
+	public:
 		SkipListNode() {}
 };
 
