@@ -44,26 +44,8 @@ struct TreeNode
 		}
 	}
 
-	bool checkLineNumber(int ln) const
-	{
-		auto temp = lines;
-		while (temp != nullptr)
-		{
-			if (temp->lineNumber == ln)
-				return (true);
-			temp = temp->next;
-		}
-		return (false);
-	}
-	void printLines() const
-	{
-		auto temp = lines;
-		while (temp != nullptr)
-		{
-			std::cout << temp->lineNumber << ", ";
-			temp = temp->next;
-		}
-	}
+	bool checkLineNumber(int) const;
+	void printLines() const;
 };
 
 class BinarySearchTree
@@ -96,6 +78,27 @@ class BinarySearchTree
 		friend void processFile(const string &, BinarySearchTree *);
 };
 
+bool TreeNode::checkLineNumber(int ln) const
+{
+	auto temp = lines;
+	while (temp != nullptr)
+	{
+		if (temp->lineNumber == ln)
+			return (true);
+		temp = temp->next;
+	}
+	return (false);
+}
+void TreeNode::printLines() const
+{
+	auto temp = lines;
+	while (temp != nullptr)
+	{
+		std::cout << temp->lineNumber << ", ";
+		temp = temp->next;
+	}
+}
+
 void BinarySearchTree::insert(TreeNode *&node, const string &w, int ln)
 {
 	if (node == nullptr)
@@ -113,7 +116,12 @@ void BinarySearchTree::insert(TreeNode *&node, const string &w, int ln)
 		else
 		{
 			if (!node->checkLineNumber(ln))
-				node->lines->next = new LineNode(ln);
+			{
+				auto temp = node->lines;
+				while (temp->next != nullptr)
+					temp = temp->next;
+				temp->next = new LineNode(ln);
+			}
 		}
 	}
 }
